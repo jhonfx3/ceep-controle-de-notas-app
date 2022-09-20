@@ -14,7 +14,7 @@ import java.util.List;
 import br.com.alura.ceep.R;
 import br.com.alura.ceep.model.Nota;
 
-public class ListaNotasAdapter extends RecyclerView.Adapter {
+public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.NotaViewHolder> {
 
 
     private List<Nota> notas;
@@ -28,7 +28,7 @@ public class ListaNotasAdapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ListaNotasAdapter.NotaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View viewCriada = LayoutInflater.
                 from(context).
                 inflate(R.layout.item_nota, parent, false);
@@ -36,12 +36,9 @@ public class ListaNotasAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListaNotasAdapter.NotaViewHolder holder, int position) {
         Nota nota = notas.get(position);
-        TextView titulo = holder.itemView.findViewById(R.id.item_nota_titulo);
-        TextView descricao = holder.itemView.findViewById(R.id.item_nota_descricao);
-        titulo.setText(nota.getTitulo());
-        descricao.setText(nota.getDescricao());
+        holder.vincula(nota);
     }
 
     @Override
@@ -50,9 +47,18 @@ public class ListaNotasAdapter extends RecyclerView.Adapter {
     }
 
     class NotaViewHolder extends RecyclerView.ViewHolder {
+        private final TextView titulo;
+        private final TextView descricao;
 
         public NotaViewHolder(@NonNull View itemView) {
             super(itemView);
+            titulo = itemView.findViewById(R.id.item_nota_titulo);
+            descricao = itemView.findViewById(R.id.item_nota_descricao);
+        }
+
+        public void vincula(Nota nota) {
+            titulo.setText(nota.getTitulo());
+            descricao.setText(nota.getDescricao());
         }
     }
 
