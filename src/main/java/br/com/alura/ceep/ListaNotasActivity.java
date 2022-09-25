@@ -16,10 +16,13 @@ import br.com.alura.ceep.ui.recyclerview.adapter.ListaNotasAdapter;
 
 public class ListaNotasActivity extends AppCompatActivity {
 
+    private NotaDAO dao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(activity_lista_notas);
+        dao = new NotaDAO();
 
         List<Nota> todasAsNotas = notasDeExemplo();
 
@@ -27,13 +30,8 @@ public class ListaNotasActivity extends AppCompatActivity {
     }
 
     private List<Nota> notasDeExemplo() {
-        NotaDAO dao = new NotaDAO();
-
-        for (int i = 1; i < 10000; i++) {
-            Nota nota = new Nota("Titulo " + i,
-                    "descricao primeira nota");
-            dao.insere(nota);
-        }
+        dao.insere(new Nota("Titulo 1", "Descricao 1"));
+        dao.insere(new Nota("Titulo 2", "Descricao 2"));
         List<Nota> todasAsNotas = dao.todos();
         return todasAsNotas;
     }
